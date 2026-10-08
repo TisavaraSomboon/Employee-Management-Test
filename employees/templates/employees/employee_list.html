@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Directory</title>
+</head>
+<body>
+    <h2>Logged in as: {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></h2>
+    
+    <h3>Employee Directory</h3>
+    
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Status</th>
+                <th>Manager</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td>
+                    {% if emp.image %}
+                        <img src="{{ emp.image.url }}" width="50" height="50" alt="{{ emp.name }}">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.department.name|default:"Unassigned" }}</td>
+                <td>{{ emp.position.name|default:"Unassigned" }}</td>
+                <td>{{ emp.get_status_display }}</td>
+                <td>{{ emp.manager.name|default:"None" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No employees found in database. Create some in Django Admin!</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

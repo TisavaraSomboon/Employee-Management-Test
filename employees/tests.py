@@ -75,5 +75,5 @@ class EmployeeAPITests(APITestCase):
         """Test deleting an employee record"""
         self.client.login(username='testuser', password='password123')
         response = self.client.delete(f'/api/employees/{self.emp2.id}/')
-        self.assertEqual(response.status_code, status.HTTP_24_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Employee.objects.count(), 1)

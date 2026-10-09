@@ -17,6 +17,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
 class EmployeeSerializer(serializers.ModelSerializer):
     # Optional: Display nested manager and department names in GET responses
     manager_name = serializers.ReadOnlyField(source='manager.name')
+    image = serializers.CharField()
 
     class Meta:
         model = Employee

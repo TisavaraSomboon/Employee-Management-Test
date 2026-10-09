@@ -11,6 +11,13 @@ class Status(models.TextChoices):
     NORMAL = "normal", "Normal"
     RESIGNED = "resigned", "Resigned"
 
+class Position(models.Model):
+    name = models.CharField(max_length=100)
+    salary = models.DecimalField(max_digits=12, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+
 class Employee(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
@@ -27,14 +34,17 @@ class Employee(models.Model):
         choices=Status.choices,
         default=Status.RECRUITMENT_PROCESS,
     )
+    position = models.ForeignKey(
+        Position,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="employees",
+    )
     createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.name}"
-
-class Position(models.Model):
-    name = models.CharField(max_length=100)
-    salary = models.DecimalField(max_digits=12, decimal_places=2)
 
 class Department(models.Model):
     name = models.CharField(max_length=100)
